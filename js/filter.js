@@ -34,15 +34,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const allBenefits = Array.from(
         new Set(cards.flatMap((card) => card.benefits))
       );
-      // 혜택 체크박스 동적 생성
+      // 혜택 체크박스 동적 생성 (input+label 쌍을 span.benefit-checkbox-wrap로 감싸서 flex item으로)
       benefitFilters.innerHTML = allBenefits
-        .map(
-          (benefit) => `
-        <label style="margin-right:1rem;">
-          <input type="checkbox" name="benefit" value="${benefit}"> ${benefit}
-        </label>
-      `
-        )
+        .map((benefit, idx) => {
+          const id = `benefit-checkbox-${idx}`;
+          return `
+            <span class="benefit-checkbox-wrap">
+              <input type="checkbox" id="${id}" name="benefit" value="${benefit}">
+              <label for="${id}">${benefit}</label>
+            </span>
+          `;
+        })
         .join("");
 
       // 모든 카드사(brand) 종류 추출 (중복 제거)
@@ -77,13 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
           emptyState.style.display = "block";
         } else {
           emptyState.style.display = "none";
-          // 카드 목록 HTML 생성
+          const favIds = getFavoriteIds();
           cardList.innerHTML = filteredCards
             .map(
               (card) => `
-            <div class="card" onclick="location.href='card-detail.html?id=${
-              card.id
-            }'">
+            <div class="card" data-card-id="${card.id}">
               <img src="${card.image}" alt="${card.name}" class="card-img" />
               <h2 class="card-name">${card.name}</h2>
               <p class="card-brand">${card.brand}</p>
@@ -91,10 +91,54 @@ document.addEventListener("DOMContentLoaded", () => {
               <ul class="card-benefits">
                 ${card.benefits.map((b) => `<li>${b}</li>`).join("")}
               </ul>
+              <button class="fav-btn" aria-label="즐겨찾기" style="margin-top:0.7rem;font-size:1.4rem;padding:0.2em 0.4em;background:none;border:none;cursor:pointer;line-height:1;">
+                ${favIds.includes(card.id) ? "★" : "☆"}
+              </button>
+              <button class="detail-btn" style="margin-top:0.7rem;">상세보기</button>
             </div>
           `
             )
             .join("");
+          // 즐겨찾기/상세보기 버튼 이벤트 위임
+          cardList.onclick = (e) => {
+            const cardDiv = e.target.closest(".card");
+            if (!cardDiv) return;
+            const cardId = cardDiv.getAttribute("data-card-id");
+            if (e.target.classList.contains("fav-btn")) {
+              let favs = getFavoriteIds();
+              if (favs.includes(cardId)) {
+                favs = favs.filter((f) => f !== cardId);
+              } else {
+                favs.push(cardId);
+              }
+              localStorage.setItem("favoriteCards", JSON.stringify(favs));
+              // 실시간으로 별 아이콘 상태만 갱신
+              // 현재 필터 조건에 맞는 카드 목록을 다시 그린다
+              const maxFee = Number(feeRange.value);
+              const checkedBenefits = Array.from(
+                document.querySelectorAll("input[name=benefit]:checked")
+              ).map((cb) => cb.value);
+              const selectedBrand = brandFilter.value;
+              let filtered = cards.filter((card) => card.fee <= maxFee);
+              if (checkedBenefits.length > 0) {
+                filtered = filtered.filter((card) =>
+                  checkedBenefits.every((b) => card.benefits.includes(b))
+                );
+              }
+              if (selectedBrand) {
+                filtered = filtered.filter(
+                  (card) => card.brand === selectedBrand
+                );
+              }
+              if (showOnlyFav) {
+                const favIds = getFavoriteIds();
+                filtered = filtered.filter((card) => favIds.includes(card.id));
+              }
+              render(filtered);
+            } else if (e.target.classList.contains("detail-btn")) {
+              location.href = `card-detail.html?id=${cardId}`;
+            }
+          };
         }
       }
 
@@ -173,46 +217,6 @@ document.addEventListener("DOMContentLoaded", () => {
       cardList.innerHTML =
         '<p style="color:red;">카드 데이터를 불러오지 못했습니다.</p>';
     });
-
-  // ===== 다크/라이트 모드 토글 버튼 기능 =====
-  (function () {
-    const btn = document.getElementById("theme-toggle");
-    if (!btn) return;
-    const body = document.body;
-    // 현재 모드(localStorage 또는 시스템)
-    function getSystemTheme() {
-      return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
-    }
-    function applyTheme(theme) {
-      if (theme === "dark") {
-        body.classList.add("dark-mode");
-        btn.textContent = "☀️ 라이트모드";
-      } else {
-        body.classList.remove("dark-mode");
-        btn.textContent = "🌙 다크모드";
-      }
-    }
-    // 초기 적용
-    const saved = localStorage.getItem("theme");
-    const initial = saved || getSystemTheme();
-    applyTheme(initial);
-    // 버튼 클릭 시 토글
-    btn.onclick = () => {
-      const now = body.classList.contains("dark-mode") ? "dark" : "light";
-      const next = now === "dark" ? "light" : "dark";
-      localStorage.setItem("theme", next);
-      applyTheme(next);
-    };
-    // 시스템 테마 변경 감지(수동 선택 없을 때만)
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", (e) => {
-        if (!localStorage.getItem("theme"))
-          applyTheme(e.matches ? "dark" : "light");
-      });
-  })();
 
   // ===== 유입경로 기록 (메인 페이지 로드 시) =====
   (function () {

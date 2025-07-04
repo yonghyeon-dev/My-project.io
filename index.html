@@ -48,137 +48,55 @@
     <header>
       <h1 id="main-title">카드 혜택 비교</h1>
       <!-- 로그인/회원가입/로그아웃/관리자 메뉴 -->
-      <div
-        id="auth-area"
-        style="
-          position: absolute;
-          top: 1.2rem;
-          right: 7.5rem;
-          display: flex;
-          gap: 0.7rem;
-          align-items: center;
-          z-index: 3;
-        "
-      >
-        <span id="user-email" style="font-size: 0.97rem; color: #888"></span>
+      <div id="auth-area">
+        <span id="user-email"></span>
         <button id="login-btn">로그인</button>
-        <a
-          id="signup-btn"
-          href="signup.html"
-          style="
-            display: inline-block;
-            padding: 0.5rem 1.2rem;
-            border-radius: 8px;
-            border: 1.5px solid #e5e5e5;
-            background: #fff;
-            color: #181818;
-            font-size: 1rem;
-            font-weight: 600;
-          "
-          >회원가입</a
-        >
+        <a id="signup-btn" href="signup.html">회원가입</a>
         <button id="logout-btn" style="display: none">로그아웃</button>
-        <a
-          id="admin-link"
-          href="/admin.html"
-          style="display: none; font-weight: 700"
-          >관리자</a
-        >
-      </div>
-      <!-- 로그인/회원가입 모달 -->
-      <div
-        id="auth-modal"
-        style="
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          background: rgba(0, 0, 0, 0.25);
-          z-index: 10;
-          align-items: center;
-          justify-content: center;
-        "
-      >
-        <div
-          style="
-            background: #fff;
-            padding: 2rem 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.13);
-            min-width: 320px;
-            max-width: 90vw;
-          "
-        >
-          <h2 class="auth-modal-title">로그인 / 회원가입</h2>
-          <form id="auth-form">
-            <input
-              id="auth-email"
-              type="email"
-              placeholder="이메일"
-              required
-              style="width: 100%; margin-bottom: 0.7rem; padding: 0.5rem"
-            />
-            <input
-              id="auth-pw"
-              type="password"
-              placeholder="비밀번호"
-              required
-              style="width: 100%; margin-bottom: 0.7rem; padding: 0.5rem"
-            />
-            <div class="auth-btn-row">
-              <button type="submit" id="do-login">로그인</button>
-              <button type="button" id="do-signup">회원가입</button>
-              <button
-                type="button"
-                id="close-auth-modal"
-                style="margin-left: auto"
-              >
-                닫기
-              </button>
-            </div>
-            <button
-              type="button"
-              id="google-login-btn"
-              style="
-                width: 100%;
-                margin-top: 1rem;
-                background: #fff;
-                color: #181818;
-                border: 1.5px solid #e5e5e5;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-              "
-            >
-              <img
-                src="https://developers.google.com/identity/images/g-logo.png"
-                alt="Google"
-                style="width: 18px; vertical-align: middle"
-              />
-              Google로 로그인
-            </button>
-          </form>
-          <div
-            id="auth-msg"
-            style="color: #c00; margin-top: 0.7rem; font-size: 0.97rem"
-          ></div>
-          <div class="auth-link-row">
-            <a
-              href="/signup.html"
-              style="
-                color: #0077c2;
-                text-decoration: underline;
-                font-size: 0.98rem;
-              "
-              >회원가입 페이지로 이동</a
-            >
-          </div>
-        </div>
+        <a id="admin-link" href="/admin.html" style="display: none">관리자</a>
       </div>
     </header>
+    <!-- 로그인/회원가입 모달: header와 container 사이로 이동 -->
+    <div id="auth-modal" style="display: none">
+      <div>
+        <h2 class="auth-modal-title">로그인 / 회원가입</h2>
+        <form id="auth-form">
+          <input id="auth-email" type="email" placeholder="이메일" required />
+          <input id="auth-pw" type="password" placeholder="비밀번호" required />
+          <div class="auth-btn-row">
+            <button type="submit" id="do-login">로그인</button>
+            <button type="button" id="do-signup">회원가입</button>
+            <button type="button" id="close-auth-modal">닫기</button>
+          </div>
+          <button
+            type="button"
+            id="google-login-btn"
+            style="
+              width: 100%;
+              margin-top: 1rem;
+              background: #fff;
+              color: #181818;
+              border: 1.5px solid #e5e5e5;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 8px;
+            "
+          >
+            <img
+              src="https://developers.google.com/identity/images/g-logo.png"
+              alt="Google"
+              style="width: 18px; vertical-align: middle"
+            />
+            Google로 로그인
+          </button>
+        </form>
+        <div id="auth-msg"></div>
+        <div class="auth-link-row">
+          <a href="/signup.html">회원가입 페이지로 이동</a>
+        </div>
+      </div>
+    </div>
     <main>
       <div class="container">
         <nav id="filter-nav">
@@ -194,7 +112,6 @@
                     max="100000"
                     step="1000"
                     value="100000"
-                    style="width: 60px; margin: 0 0.5rem"
                   />
                   <span id="fee-unit">원</span>
                 </label>
@@ -234,11 +151,13 @@
       // 로그인 버튼 클릭 → 모달 표시
       document.getElementById("login-btn").onclick = function () {
         document.getElementById("auth-modal").style.display = "flex";
+        document.body.classList.add("modal-open");
       };
       // 모달 닫기
       document.getElementById("close-auth-modal").onclick = function () {
         document.getElementById("auth-modal").style.display = "none";
         document.getElementById("auth-msg").textContent = "";
+        document.body.classList.remove("modal-open");
       };
       // 로그인 처리
       document.getElementById("auth-form").onsubmit = function (e) {
@@ -249,6 +168,7 @@
           .then(() => {
             document.getElementById("auth-modal").style.display = "none";
             document.getElementById("auth-msg").textContent = "";
+            document.body.classList.remove("modal-open");
             location.reload();
           })
           .catch((err) => {
@@ -263,6 +183,7 @@
           .then(() => {
             document.getElementById("auth-msg").textContent =
               "회원가입 성공! 로그인 해주세요.";
+            document.body.classList.remove("modal-open");
           })
           .catch((err) => {
             document.getElementById("auth-msg").textContent = err.message;

@@ -1,0 +1,393 @@
+/* --- 전체 페이지: 현대적 & 통계적 인기 디자인 트렌드 적용 --- */
+html,
+body {
+  height: 100%;
+  background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+  min-height: 100vh;
+  font-family: "Noto Sans KR", "Pretendard", Arial, sans-serif;
+  color: #222;
+  letter-spacing: -0.2px;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+header {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 24px rgba(31, 38, 135, 0.07);
+  border-bottom: 1.5px solid #e0c3fc;
+  padding: 2.2rem 0 1.2rem 0;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -1px;
+  border-radius: 0 0 24px 24px;
+  backdrop-filter: blur(8px);
+}
+header h1 {
+  margin: 0 auto;
+  display: inline-block;
+  font-size: 2.1rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #8ec5fc, #e0c3fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+  margin-top: 2.5rem;
+}
+#card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 2.2rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  margin-top: 0.5rem;
+}
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(31, 38, 135, 0.1);
+  padding: 2rem 1.2rem 1.3rem 1.2rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  box-shadow: 0 12px 40px rgba(31, 38, 135, 0.18);
+  transform: translateY(-6px) scale(1.025);
+}
+.card-img {
+  width: 90px;
+  height: 54px;
+  object-fit: contain;
+  margin-bottom: 1.2rem;
+  filter: grayscale(0.1) contrast(1.1);
+  border-radius: 10px;
+  background: #f7f7fa;
+  box-shadow: 0 1px 4px #e0c3fc33;
+}
+.card-name {
+  font-size: 1.18rem;
+  font-weight: 800;
+  margin: 0.5rem 0 0.2rem 0;
+  color: #181818;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #8ec5fc, #e0c3fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.card-brand {
+  font-size: 1.01rem;
+  color: #444;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+.card-fee {
+  font-size: 1.01rem;
+  color: #444;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.card-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.99rem;
+  color: #444;
+  font-weight: 400;
+}
+.card-benefits li {
+  margin-bottom: 0.18rem;
+}
+.card-desc {
+  color: #222;
+  font-size: 0.98rem;
+  margin-top: 0.7rem;
+  line-height: 1.6;
+}
+.apply-btn {
+  background: linear-gradient(90deg, #8ec5fc, #e0c3fc);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-weight: 700;
+  font-size: 1.01rem;
+  border: none;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(31, 38, 135, 0.07);
+  margin-top: 1.2rem;
+  text-decoration: none;
+  display: inline-block;
+  letter-spacing: -0.5px;
+}
+.apply-btn:hover {
+  background: linear-gradient(90deg, #e0c3fc, #8ec5fc);
+  color: #fff;
+  box-shadow: 0 4px 16px #8ec5fc44;
+}
+button,
+.ad-area button,
+#show-favorites-btn {
+  background: linear-gradient(90deg, #8ec5fc, #e0c3fc);
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.5rem 1.2rem;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(31, 38, 135, 0.04);
+}
+button:hover,
+.ad-area button:hover,
+#show-favorites-btn:hover {
+  background: linear-gradient(90deg, #e0c3fc, #8ec5fc);
+  color: #fff;
+  box-shadow: 0 2px 8px #8ec5fc44;
+}
+#auth-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(31, 38, 135, 0.18);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+}
+#auth-modal > div {
+  background: rgba(255, 255, 255, 0.98);
+  padding: 2rem 2.5rem;
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(31, 38, 135, 0.18);
+  min-width: 320px;
+  max-width: 90vw;
+  z-index: 10000;
+  position: relative;
+}
+#auth-modal h2 {
+  margin-bottom: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #8ec5fc;
+}
+#auth-form input {
+  width: 100%;
+  margin-bottom: 0.7rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1.2px solid #e0c3fc;
+  font-size: 1rem;
+}
+#auth-form div {
+  display: flex;
+  gap: 0.7rem;
+}
+#close-auth-modal {
+  margin-left: auto;
+}
+#auth-msg {
+  color: #c00;
+  margin-top: 0.7rem;
+  font-size: 0.97rem;
+}
+#auth-modal a {
+  color: #8ec5fc;
+  text-decoration: underline;
+  font-size: 0.98rem;
+  display: block;
+  margin-top: 1.2rem;
+  text-align: center;
+}
+.ad-area {
+  text-align: center;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #e0c3fc33;
+  padding: 2.5rem 1.5rem;
+  margin-top: 2.2rem;
+}
+.ad-placeholder {
+  color: #aaa;
+  font-size: 1.1rem;
+}
+.favorites-bar {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+#show-favorites-btn {
+  padding: 0.5rem 1.2rem;
+}
+#loading-spinner {
+  display: none;
+  text-align: center;
+  margin: 2rem 0;
+  color: #8ec5fc;
+  font-size: 1.1rem;
+}
+#empty-state {
+  display: none;
+  text-align: center;
+  color: #888;
+  margin: 2rem 0;
+  font-size: 1.1rem;
+}
+#auth-area {
+  position: absolute;
+  top: 1.5rem;
+  right: 2.5rem;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px #e0c3fc33;
+  padding: 0.4rem 1.1rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+@media (max-width: 900px) {
+  .container {
+    padding: 1.2rem 0.7rem 0.7rem 0.7rem;
+    margin-top: 1.2rem;
+  }
+  #card-list {
+    gap: 1.2rem;
+  }
+  #auth-area {
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.97rem;
+    padding: 0.3rem 0.7rem;
+  }
+}
+@media (max-width: 600px) {
+  .container {
+    padding: 0.7rem 0.3rem 0.5rem 0.3rem;
+    margin-top: 0.7rem;
+  }
+  #card-list {
+    gap: 0.7rem;
+  }
+  header {
+    font-size: 1.1rem;
+    padding: 1.1rem 0 0.7rem 0;
+    border-radius: 0 0 14px 14px;
+  }
+  #auth-area {
+    position: static;
+    margin: 0.7rem auto 0.2rem auto;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: none;
+    border-radius: 10px;
+    padding: 0.2rem 0.5rem;
+  }
+}
+#fee-range {
+  width: 150px;
+  margin: 0 0.7rem;
+  accent-color: #8ec5fc;
+  background: transparent;
+  border-radius: 8px;
+  border: 1.5px solid #bdbdbd;
+  transition: border 0.18s, box-shadow 0.18s;
+}
+#fee-range:hover,
+#fee-range:focus {
+  border-color: #8ec5fc;
+  box-shadow: 0 0 0 2px #8ec5fc33;
+}
+#fee-range::-webkit-slider-thumb:hover {
+  background: #8ec5fc;
+  border-color: #e0c3fc;
+}
+#fee-range::-moz-range-thumb:hover {
+  background: #8ec5fc;
+  border-color: #e0c3fc;
+}
+#fee-range::-ms-thumb:hover {
+  background: #8ec5fc;
+  border-color: #e0c3fc;
+}
+#brand-filter {
+  min-width: 70px;
+  font-size: 0.97rem;
+  border-radius: 8px;
+  border: 1.2px solid #bdbdbd;
+  padding: 0.22rem 0.6rem;
+  background: rgba(255, 255, 255, 0.7);
+  color: #2b2d42;
+  transition: border 0.18s, background 0.18s, box-shadow 0.18s;
+  box-shadow: 0 1px 4px rgba(31, 38, 135, 0.07);
+}
+#brand-filter:hover,
+#brand-filter:focus {
+  border-color: #8ec5fc;
+  background: #f5faff;
+  box-shadow: 0 0 0 2px #8ec5fc33;
+}
+#benefit-filters label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.18rem 1.1rem;
+  font-size: 1.01rem;
+  background: linear-gradient(90deg, #e0c3fc, #8ec5fc);
+  border-radius: 999px;
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+  color: #2b2d42;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(31, 38, 135, 0.07);
+  border: 1.2px solid #e0c3fc;
+}
+#benefit-filters label:hover,
+#benefit-filters input[type="checkbox"]:focus + label {
+  background: linear-gradient(90deg, #8ec5fc, #e0c3fc);
+  color: #fff;
+  box-shadow: 0 2px 8px #8ec5fc44;
+  border-color: #8ec5fc;
+}
+.fee-range-group {
+  margin-right: 2rem;
+}
+.brand-group {
+  margin-right: 2rem;
+}
+#benefit-filters {
+  margin-left: 1.5rem;
+}
+.filter-box {
+  gap: 2.5rem 2.5rem;
+}

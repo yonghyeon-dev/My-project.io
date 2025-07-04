@@ -4,7 +4,7 @@ html {
 body {
   scrollbar-gutter: stable;
   font-family: "Noto Sans KR", Arial, sans-serif;
-  background: #fff;
+  background: #fff !important;
   color: #181818; /* 거의 검은색 텍스트 */
   margin: 0;
   padding: 0;
@@ -27,6 +27,27 @@ header h1 {
   left: 0;
   right: 0;
   text-align: center;
+}
+#theme-toggle {
+  position: absolute;
+  left: 2rem;
+  top: 1.2rem;
+  width: auto;
+  height: auto;
+  z-index: 3;
+  display: block;
+  font-size: 1.2rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  background: #fff;
+  color: #181818;
+  border: 1.5px solid #e5e5e5;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+#theme-toggle:hover {
+  background: #181818;
+  color: #fff;
+  border-color: #181818;
 }
 #auth-area {
   position: absolute;
@@ -127,12 +148,12 @@ header h1 {
   color: #aaa;
 }
 .favorites-bar {
-  background: transparent;
-  box-shadow: none;
-  border-radius: 0;
-  border: none;
-  margin: 0;
-  padding: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 #show-favorites-btn {
   padding: 0.5rem 1.2rem;
@@ -154,7 +175,7 @@ header h1 {
   padding: 2.5rem 1.5rem;
   box-sizing: border-box;
   width: 100%;
-  background: #fff;
+  background: #fff !important;
 }
 main,
 nav#filter-nav,
@@ -164,7 +185,7 @@ nav#filter-nav,
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  background: #fff;
+  background: #fff !important;
 }
 nav#filter-nav {
   max-width: 1000px;
@@ -196,20 +217,20 @@ nav#filter-nav {
 .brand-group,
 #benefit-filters,
 .fee-range-group label {
-  margin: 0;
-  padding: 0;
-  width: auto;
-  min-width: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
 }
 #card-list {
   padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2.2rem;
-  border: none;
-  margin-top: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+  border: none !important;
+  margin-top: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 .card {
   background: #fff;
@@ -412,49 +433,60 @@ button:hover,
 #filter-form label:hover {
   color: #181818;
 }
+#benefit-filters label:hover {
+  background: #181818;
+  color: #fff;
+  border-radius: 6px;
+}
+/* ===== [백업] flex 레이아웃(최적화, 줄별 최대한 가운데 정렬) =====
+/*
 #benefit-filters {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.7rem 1.2rem;
+  width: 100%;
+  margin-top: 1.2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  word-break: keep-all;
+  margin-bottom: 1.2rem;
+}
+#benefit-filters label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.7rem;
+  font-size: 1rem;
+  background: #f7f7f7;
+  border-radius: 6px;
+  margin-bottom: 0.4rem;
+  margin-right: 0.3rem;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+*/
+
+/* ===== 개선: column-count 멀티컬럼 레이아웃 ===== */
+#benefit-filters {
+  column-count: 4;
+  column-gap: 1.2rem;
   width: 100%;
   max-width: 700px;
   margin: 0.7rem auto 1.2rem auto;
   padding: 0;
 }
-#benefit-filters input[type="checkbox"] {
-  display: inline-flex;
-  vertical-align: middle;
-  margin-right: 0.35em;
-}
-.benefit-checkbox-wrap {
-  display: inline-flex;
-  align-items: center;
-  margin-bottom: 0.2rem;
-  margin-right: 1.2rem;
-}
 #benefit-filters label {
-  display: inline;
-  margin: 0;
-  font-weight: 500;
-  color: #222;
-  cursor: pointer;
-  white-space: nowrap;
-  background: none;
-  box-shadow: none;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  box-sizing: border-box;
-  text-align: left;
-  transition: none;
-}
-#benefit-filters label:hover,
-#benefit-filters input[type="checkbox"]:focus + label {
-  color: #181818;
-  background: #f5f5f5;
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 0.4rem;
+  padding: 0.1rem 0.7rem;
+  font-size: 1rem;
+  background: #f7f7f7;
   border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+  box-sizing: border-box;
+  white-space: nowrap;
+  text-align: center;
 }
 @media (max-width: 900px) {
   #benefit-filters {
@@ -499,8 +531,71 @@ button:hover,
   }
 }
 /* ===== 라이트모드: 토글 시 시스템 다크모드보다 항상 우선 적용 ===== */
-/* (body.light-mode 및 관련 스타일 전체 삭제) */
-/* ===== 필터 영역 통합 정렬 ===== */
+body.light-mode {
+  background: #f5f5f7 !important;
+  color: #181818 !important;
+}
+body.light-mode header,
+body.light-mode .card,
+body.light-mode .ad-area,
+body.light-mode .admin-section {
+  background: #fff !important;
+  color: #181818 !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+  border-color: #e5e5e5 !important;
+}
+body.light-mode .card-name,
+body.light-mode .card-brand,
+body.light-mode .card-fee,
+body.light-mode .card-benefits,
+body.light-mode .card-desc {
+  color: #181818 !important;
+}
+body.light-mode .apply-btn,
+body.light-mode button,
+body.light-mode .ad-area button,
+body.light-mode #show-favorites-btn {
+  background: #181818 !important;
+  color: #fff !important;
+  border-color: #e5e5e5 !important;
+}
+body.light-mode .apply-btn:hover,
+body.light-mode button:hover,
+body.light-mode .ad-area button:hover,
+body.light-mode #show-favorites-btn:hover {
+  background: #333 !important;
+  color: #fff !important;
+  border-color: #181818 !important;
+}
+body.light-mode #filter-form select,
+body.light-mode #filter-form input[type="range"]::-webkit-slider-runnable-track,
+body.light-mode #filter-form input[type="range"]::-moz-range-track,
+body.light-mode #filter-form input[type="range"]::-ms-fill-lower,
+body.light-mode #filter-form input[type="range"]::-ms-fill-upper {
+  background: #fff !important;
+  color: #181818 !important;
+  border-color: #e5e5e5 !important;
+}
+body.light-mode #filter-form input[type="range"]::-webkit-slider-thumb,
+body.light-mode #filter-form input[type="range"]::-moz-range-thumb,
+body.light-mode #filter-form input[type="range"]::-ms-thumb {
+  background: #181818 !important;
+  border: 2.5px solid #fff !important;
+}
+body.light-mode #loading-spinner {
+  color: #181818 !important;
+}
+body.light-mode #empty-state {
+  color: #888 !important;
+}
+body.light-mode .admin-table th,
+body.light-mode .admin-table td {
+  border-color: #e5e5e5 !important;
+}
+body.light-mode .bar {
+  background: #181818 !important;
+}
+/* ===== 필터 네비게이션 바 시각적 구분 강화 ===== */
 nav#filter-nav {
   /* 기존 스타일 유지 */
 }
@@ -522,19 +617,6 @@ nav#filter-nav {
   margin-bottom: 0.7rem;
   width: 100%;
 }
-/* ===== 필터 박스 통합 레이아웃 ===== */
-.filter-box {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-end;
-  gap: 1.2rem 1.2rem;
-  padding: 1.2rem 0.1rem 1.2rem 2.5rem;
-  margin-bottom: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-/* ===== 필터 그룹 통합 스타일 ===== */
 .fee-range-group,
 .brand-group {
   display: flex;
@@ -543,7 +625,6 @@ nav#filter-nav {
   min-width: 0;
   flex-shrink: 1;
   gap: 0.5rem;
-  margin-right: 0;
 }
 .fee-range-group label,
 .brand-group label {
@@ -554,7 +635,6 @@ nav#filter-nav {
 .brand-group select {
   max-width: 100%;
 }
-/* ===== 입력 요소 기본값 리셋 ===== */
 #fee-input {
   width: unset;
   min-width: unset;
@@ -574,11 +654,6 @@ nav#filter-nav {
   height: unset;
   font-size: unset;
 }
-/* ===== 혜택 필터 정렬 ===== */
-#benefit-filters {
-  margin-left: 0;
-}
-/* ===== 광고 영역 ===== */
 .ad-area,
 #card-list {
   max-width: 1000px;
@@ -589,18 +664,28 @@ nav#filter-nav {
 .ad-area {
   padding: 2.5rem 1.5rem;
 }
-.fav-btn {
-  color: #ffb300;
-  background: none;
-  border: none;
-  outline: none;
-  font-size: 1.4rem;
-  padding: 0.2em 0.4em;
-  cursor: pointer;
-  line-height: 1;
-  transition: color 0.18s;
+/* ===== 개선: filter-box flex 레이아웃 ===== */
+.filter-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1.2rem 1.2rem;
+  padding: 1.2rem 0.1rem;
+  margin-bottom: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
-.fav-btn:hover,
-.fav-btn:focus {
-  color: #ff8800;
+.brand-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 120px;
+  margin: 0 0.7rem;
+  gap: 0.5rem;
+}
+.brand-group label {
+  margin-bottom: 0;
+  font-size: 1rem;
+  display: block;
 }
