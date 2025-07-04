@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>카드 혜택 비교</title>
+    <!-- 사이트 설명 (SEO용) -->
+    <meta
+      name="description"
+      content="최신 신용카드 혜택, 연회비, 혜택별 필터로 쉽게 비교하세요."
+    />
+    <!-- Open Graph (SNS 공유용) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="카드 혜택 비교 툴" />
+    <meta
+      property="og:description"
+      content="최신 신용카드 혜택, 연회비, 혜택별 필터로 쉽게 비교하세요."
+    />
+    <meta property="og:image" content="/assets/og-image.png" />
+    <!-- 대표 이미지 경로 -->
+    <meta property="og:url" content="https://your-site-url.com/" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="카드 혜택 비교 툴" />
+    <meta
+      name="twitter:description"
+      content="최신 신용카드 혜택, 연회비, 혜택별 필터로 쉽게 비교하세요."
+    />
+    <meta name="twitter:image" content="/assets/og-image.png" />
+    <!-- JSON-LD 구조화 데이터 (사이트 정보) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "카드 혜택 비교 툴",
+        "url": "https://your-site-url.com/",
+        "description": "최신 신용카드 혜택, 연회비, 혜택별 필터로 쉽게 비교하세요.",
+        "inLanguage": "ko"
+      }
+    </script>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1 id="main-title">카드 혜택 비교</h1>
+      <!-- 로그인/회원가입/로그아웃/관리자 메뉴 -->
+      <div
+        id="auth-area"
+        style="
+          position: absolute;
+          top: 1.2rem;
+          right: 7.5rem;
+          display: flex;
+          gap: 0.7rem;
+          align-items: center;
+          z-index: 3;
+        "
+      >
+        <span id="user-email" style="font-size: 0.97rem; color: #888"></span>
+        <button id="login-btn">로그인</button>
+        <a
+          id="signup-btn"
+          href="/signup.html"
+          style="
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            border: 1.5px solid #e5e5e5;
+            background: #fff;
+            color: #181818;
+            font-size: 1rem;
+            font-weight: 600;
+          "
+          >회원가입</a
+        >
+        <button id="logout-btn" style="display: none">로그아웃</button>
+        <a
+          id="admin-link"
+          href="/admin.html"
+          style="display: none; font-weight: 700"
+          >관리자</a
+        >
+      </div>
+      <!-- 로그인/회원가입 모달 -->
+      <div
+        id="auth-modal"
+        style="
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.25);
+          z-index: 10;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        <div
+          style="
+            background: #fff;
+            padding: 2rem 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.13);
+            min-width: 320px;
+            max-width: 90vw;
+          "
+        >
+          <h2 class="auth-modal-title">로그인 / 회원가입</h2>
+          <form id="auth-form">
+            <input
+              id="auth-email"
+              type="email"
+              placeholder="이메일"
+              required
+              style="width: 100%; margin-bottom: 0.7rem; padding: 0.5rem"
+            />
+            <input
+              id="auth-pw"
+              type="password"
+              placeholder="비밀번호"
+              required
+              style="width: 100%; margin-bottom: 0.7rem; padding: 0.5rem"
+            />
+            <div class="auth-btn-row">
+              <button type="submit" id="do-login">로그인</button>
+              <button type="button" id="do-signup">회원가입</button>
+              <button
+                type="button"
+                id="close-auth-modal"
+                style="margin-left: auto"
+              >
+                닫기
+              </button>
+            </div>
+          </form>
+          <div
+            id="auth-msg"
+            style="color: #c00; margin-top: 0.7rem; font-size: 0.97rem"
+          ></div>
+          <div class="auth-link-row">
+            <a
+              href="/signup.html"
+              style="
+                color: #0077c2;
+                text-decoration: underline;
+                font-size: 0.98rem;
+              "
+              >회원가입 페이지로 이동</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <nav id="filter-nav">
+          <form id="filter-form" class="filter-bar">
+            <div class="filter-box">
+              <div class="fee-range-group">
+                <label for="fee-range"
+                  >연회비(이하):
+                  <span id="fee-value" class="fee-value">전체</span></label
+                >
+                <input
+                  type="range"
+                  id="fee-range"
+                  name="fee"
+                  min="0"
+                  max="100000"
+                  step="1000"
+                  value="100000"
+                />
+              </div>
+              <div class="brand-group">
+                <label for="brand-filter">카드사:</label>
+                <select id="brand-filter" name="brand">
+                  <option value="">전체</option>
+                </select>
+              </div>
+              <div id="benefit-filters"></div>
+            </div>
+          </form>
+        </nav>
+        <div class="ad-area">
+          <span class="ad-placeholder">광고 영역</span>
+        </div>
+        <div class="favorites-bar">
+          <button id="show-favorites-btn">★ 즐겨찾기 모아보기</button>
+        </div>
+        <div id="loading-spinner"><span>불러오는 중...</span></div>
+        <div id="empty-state">조건에 맞는 카드가 없습니다.</div>
+        <div id="card-list"></div>
+      </div>
+    </main>
+    <script src="/js/filter.js"></script>
+  </body>
+</html>
