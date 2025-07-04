@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 카드 데이터 fetch 및 렌더링
-  loadingSpinner.style.display = "block"; // 로딩 스피너 표시
-  fetch("../data/cards.json")
+  loadingSpinner.style.display = "block";
+  fetch("data/cards.json")
     .then((res) => res.json())
     .then((cards) => {
       loadingSpinner.style.display = "none"; // 로딩 스피너 숨김

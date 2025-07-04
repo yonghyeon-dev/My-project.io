@@ -6,7 +6,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // 카드 데이터 불러오기
-  fetch("../data/cards.json")
+  fetch("data/cards.json")
     .then((res) => res.json())
     .then((cards) => {
       // 카드 id → name 매핑
