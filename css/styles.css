@@ -1,0 +1,683 @@
+html {
+  overflow-y: scroll;
+}
+body {
+  scrollbar-gutter: stable;
+  font-family: "Noto Sans KR", Arial, sans-serif;
+  background: #fff !important;
+  color: #181818; /* 거의 검은색 텍스트 */
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: #fff;
+  color: #181818;
+  padding: 2.2rem 0 1.2rem 0;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  font-weight: 800;
+  letter-spacing: -1px;
+  font-size: 1.3rem;
+  position: relative; /* 토글 버튼과 제목 정렬을 위해 */
+}
+header h1 {
+  margin: 0 auto;
+  display: inline-block;
+  position: relative;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+#theme-toggle {
+  position: absolute;
+  left: 2rem;
+  top: 1.2rem;
+  width: auto;
+  height: auto;
+  z-index: 3;
+  display: block;
+  font-size: 1.2rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  background: #fff;
+  color: #181818;
+  border: 1.5px solid #e5e5e5;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+#theme-toggle:hover {
+  background: #181818;
+  color: #fff;
+  border-color: #181818;
+}
+#auth-area {
+  position: absolute;
+  top: 1.2rem;
+  right: 7.5rem;
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  z-index: 3;
+}
+#user-email {
+  font-size: 0.97rem;
+  color: #888;
+}
+#signup-btn {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  border: 1.5px solid #e5e5e5;
+  background: #fff;
+  color: #181818;
+  font-size: 1rem;
+  font-weight: 600;
+}
+#admin-link {
+  font-weight: 700;
+}
+#auth-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+}
+#auth-modal > div {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.13);
+  min-width: 320px;
+  max-width: 90vw;
+}
+#auth-modal h2 {
+  margin-bottom: 1.2rem;
+}
+#auth-form input {
+  width: 100%;
+  margin-bottom: 0.7rem;
+  padding: 0.5rem;
+}
+#auth-form div {
+  display: flex;
+  gap: 0.7rem;
+}
+#close-auth-modal {
+  margin-left: auto;
+}
+#auth-msg {
+  color: #c00;
+  margin-top: 0.7rem;
+  font-size: 0.97rem;
+}
+#auth-modal a {
+  color: #0077c2;
+  text-decoration: underline;
+  font-size: 0.98rem;
+  display: block;
+  margin-top: 1.2rem;
+  text-align: center;
+}
+.ad-area {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.ad-placeholder {
+  color: #aaa;
+}
+.favorites-bar {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#show-favorites-btn {
+  padding: 0.5rem 1.2rem;
+}
+#loading-spinner {
+  display: none;
+  text-align: center;
+  margin: 2rem 0;
+}
+#empty-state {
+  display: none;
+  text-align: center;
+  color: #888;
+  margin: 2rem 0;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  background: #fff !important;
+}
+main,
+nav#filter-nav,
+.ad-area,
+#card-list {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  background: #fff !important;
+}
+nav#filter-nav {
+  max-width: 1000px;
+  margin: 2.5rem auto 2.2rem auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.filter-box,
+.ad-area,
+.favorites-bar,
+#card-list,
+#empty-state,
+#loading-spinner {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border: 1.5px solid #f0f0f0;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+}
+.filter-row,
+.fee-range-group,
+.brand-group,
+#benefit-filters,
+.fee-range-group label {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  flex: none !important;
+  display: initial !important;
+  gap: 0 !important;
+}
+#card-list {
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.2rem;
+  border: none !important;
+  margin-top: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+.card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.1);
+  padding: 2rem 1.2rem 1.3rem 1.2rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+}
+.card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
+  transform: translateY(-6px) scale(1.025);
+  border-color: #18181822;
+}
+.card-img {
+  width: 90px;
+  height: 54px;
+  object-fit: contain;
+  margin-bottom: 1.2rem;
+  filter: grayscale(0.2) contrast(1.1);
+}
+.card-name {
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin: 0.5rem 0 0.2rem 0;
+  color: #181818;
+  letter-spacing: -0.5px;
+}
+.card-brand {
+  font-size: 1.01rem;
+  color: #444;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+.card-fee {
+  font-size: 1.01rem;
+  color: #444;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.card-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.99rem;
+  color: #444;
+  font-weight: 400;
+}
+.card-benefits li {
+  margin-bottom: 0.18rem;
+}
+.card-desc {
+  color: #222;
+  font-size: 0.98rem;
+  margin-top: 0.7rem;
+  line-height: 1.6;
+}
+.apply-btn {
+  background: #181818;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-weight: 700;
+  font-size: 1.01rem;
+  border: none;
+  transition: background 0.18s, color 0.18s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  margin-top: 1.2rem;
+  text-decoration: none;
+  display: inline-block;
+}
+.apply-btn:hover {
+  background: #000;
+  color: #fff;
+}
+button,
+.ad-area button,
+#show-favorites-btn {
+  background: #181818;
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.5rem 1.2rem;
+  transition: background 0.18s, color 0.18s;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+button:hover,
+.ad-area button:hover,
+#show-favorites-btn:hover {
+  background: #000;
+  color: #fff;
+}
+/* 필터 영역 커서 및 호버 효과 */
+#filter-form label,
+#filter-form input[type="checkbox"] + label,
+#filter-form select {
+  cursor: pointer;
+}
+/* ===== fee-range(슬라이더) 완전 커스텀: 파란색 트랙 제거, thumb 중앙 정렬 ===== */
+#filter-form input[type="range"] {
+  width: 180px;
+  height: 18px;
+  background: #fff;
+  margin: 0 0.7rem 0 0.7rem;
+  accent-color: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 0.2rem 0.3rem;
+}
+#filter-form input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #181818;
+  border: 2.5px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: -7.5px; /* 트랙 중앙에 thumb 맞춤 */
+  position: relative;
+  z-index: 2;
+}
+#filter-form input[type="range"]:focus::-webkit-slider-thumb {
+  background: #000;
+  border-color: #181818;
+}
+#filter-form input[type="range"]::-webkit-slider-runnable-track {
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  position: relative;
+  z-index: 1;
+}
+#filter-form input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #181818;
+  border: 2.5px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+}
+#filter-form input[type="range"]:focus::-moz-range-thumb {
+  background: #000;
+  border-color: #181818;
+}
+#filter-form input[type="range"]::-moz-range-track {
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+  position: relative;
+  z-index: 1;
+}
+#filter-form input[type="range"]::-ms-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #181818;
+  border: 2.5px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+}
+#filter-form input[type="range"]:focus::-ms-thumb {
+  background: #000;
+  border-color: #181818;
+}
+#filter-form input[type="range"]::-ms-fill-lower,
+#filter-form input[type="range"]::-ms-fill-upper {
+  background: #fff;
+  border-radius: 2px;
+  z-index: 1;
+}
+#filter-form select {
+  background: #fff;
+  color: #181818;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 6px;
+  padding: 0.3rem 0.7rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.18s, color 0.18s, border 0.18s;
+}
+#filter-form select:hover {
+  background: #181818;
+  color: #fff;
+  border-color: #181818;
+}
+#filter-form label:hover {
+  color: #181818;
+}
+#benefit-filters label:hover {
+  background: #181818;
+  color: #fff;
+  border-radius: 6px;
+}
+/* ===== [백업] flex 레이아웃(최적화, 줄별 최대한 가운데 정렬) =====
+/*
+#benefit-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem 1.2rem;
+  width: 100%;
+  margin-top: 1.2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  word-break: keep-all;
+  margin-bottom: 1.2rem;
+}
+#benefit-filters label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.7rem;
+  font-size: 1rem;
+  background: #f7f7f7;
+  border-radius: 6px;
+  margin-bottom: 0.4rem;
+  margin-right: 0.3rem;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+*/
+
+/* ===== 개선: column-count 멀티컬럼 레이아웃 ===== */
+#benefit-filters {
+  column-count: 4;
+  column-gap: 1.2rem;
+  width: 100%;
+  max-width: 700px;
+  margin: 1.2rem auto 1.2rem auto;
+  padding: 0;
+}
+#benefit-filters label {
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 0.4rem;
+  padding: 0.1rem 0.7rem;
+  font-size: 1rem;
+  background: #f7f7f7;
+  border-radius: 6px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  #benefit-filters {
+    column-count: 2;
+  }
+}
+
+/* ===== 필터 영역 반응형 레이아웃 ===== */
+@media (max-width: 700px) {
+  .filter-box {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.2rem 0;
+    padding: 1rem 0.5rem;
+  }
+  .fee-range-group,
+  .brand-group {
+    min-width: 0;
+    margin: 0 0 0.7rem 0;
+  }
+  .filter-row {
+    gap: 0.7rem;
+  }
+  #benefit-filters {
+    gap: 0.4rem 0.6rem;
+  }
+  #benefit-filters label {
+    font-size: 0.97rem;
+    padding: 0.08rem 0.4rem;
+  }
+  #filter-form input[type="range"] {
+    width: 120px;
+  }
+}
+@media (max-width: 600px) {
+  #card-list {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+  .card {
+    padding: 1.1rem 0.5rem 0.8rem 0.5rem;
+  }
+}
+/* ===== 라이트모드: 토글 시 시스템 다크모드보다 항상 우선 적용 ===== */
+body.light-mode {
+  background: #f5f5f7 !important;
+  color: #181818 !important;
+}
+body.light-mode header,
+body.light-mode .card,
+body.light-mode .ad-area,
+body.light-mode .admin-section {
+  background: #fff !important;
+  color: #181818 !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+  border-color: #e5e5e5 !important;
+}
+body.light-mode .card-name,
+body.light-mode .card-brand,
+body.light-mode .card-fee,
+body.light-mode .card-benefits,
+body.light-mode .card-desc {
+  color: #181818 !important;
+}
+body.light-mode .apply-btn,
+body.light-mode button,
+body.light-mode .ad-area button,
+body.light-mode #show-favorites-btn {
+  background: #181818 !important;
+  color: #fff !important;
+  border-color: #e5e5e5 !important;
+}
+body.light-mode .apply-btn:hover,
+body.light-mode button:hover,
+body.light-mode .ad-area button:hover,
+body.light-mode #show-favorites-btn:hover {
+  background: #333 !important;
+  color: #fff !important;
+  border-color: #181818 !important;
+}
+body.light-mode #filter-form select,
+body.light-mode #filter-form input[type="range"]::-webkit-slider-runnable-track,
+body.light-mode #filter-form input[type="range"]::-moz-range-track,
+body.light-mode #filter-form input[type="range"]::-ms-fill-lower,
+body.light-mode #filter-form input[type="range"]::-ms-fill-upper {
+  background: #fff !important;
+  color: #181818 !important;
+  border-color: #e5e5e5 !important;
+}
+body.light-mode #filter-form input[type="range"]::-webkit-slider-thumb,
+body.light-mode #filter-form input[type="range"]::-moz-range-thumb,
+body.light-mode #filter-form input[type="range"]::-ms-thumb {
+  background: #181818 !important;
+  border: 2.5px solid #fff !important;
+}
+body.light-mode #loading-spinner {
+  color: #181818 !important;
+}
+body.light-mode #empty-state {
+  color: #888 !important;
+}
+body.light-mode .admin-table th,
+body.light-mode .admin-table td {
+  border-color: #e5e5e5 !important;
+}
+body.light-mode .bar {
+  background: #181818 !important;
+}
+/* ===== 필터 네비게이션 바 시각적 구분 강화 ===== */
+nav#filter-nav {
+  /* 기존 스타일 유지 */
+}
+.filter-bar,
+.filter-row {
+  padding: 0;
+}
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+.filter-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2.2rem;
+  margin-bottom: 0.7rem;
+  width: 100%;
+}
+.fee-range-group,
+.brand-group {
+  width: auto;
+  min-width: 0;
+  flex: none;
+  text-align: center;
+}
+.fee-range-group input,
+.brand-group select {
+  max-width: 100%;
+}
+.fee-range-group label {
+  display: block;
+  width: auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+.ad-area,
+#card-list {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+}
+.ad-area {
+  padding: 2.5rem 1.5rem;
+}
+/* ===== 개선: filter-box flex 레이아웃 ===== */
+.filter-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2.2rem 2.2rem;
+  padding: 1.2rem 0.5rem;
+  margin-bottom: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.fee-range-group,
+.brand-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 180px;
+  margin: 0 0.7rem;
+}
+#main-title {
+  display: inline-block;
+}
+.auth-modal-title {
+  margin-bottom: 1.2rem;
+}
+.auth-btn-row {
+  display: flex;
+  gap: 0.7rem;
+}
+#logout-btn {
+  display: none;
+}
+#admin-link {
+  display: none;
+  font-weight: 700;
+}
+.auth-link-row {
+  margin-top: 1.2rem;
+  text-align: center;
+}
+.fee-value {
+  display: inline-block;
+  min-width: 6em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.2s;
+}
+
+/* ===== 다크모드 완전 폐기: body.dark-mode 이하 모든 다크모드 관련 CSS 삭제 ===== */
