@@ -38,7 +38,7 @@
         "inLanguage": "ko"
       }
     </script>
-    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
     <header>
@@ -60,7 +60,7 @@
         <button id="login-btn">로그인</button>
         <a
           id="signup-btn"
-          href="/signup.html"
+          href="signup.html"
           style="
             display: inline-block;
             padding: 0.5rem 1.2rem;
@@ -159,10 +159,19 @@
           <form id="filter-form" class="filter-bar">
             <div class="filter-box">
               <div class="fee-range-group">
-                <label for="fee-range"
-                  >연회비(이하):
-                  <span id="fee-value" class="fee-value">전체</span></label
-                >
+                <label for="fee-range">
+                  연회비(이하):
+                  <input
+                    type="number"
+                    id="fee-input"
+                    min="0"
+                    max="100000"
+                    step="1000"
+                    value="100000"
+                    style="width: 60px; margin: 0 0.5rem"
+                  />
+                  <span id="fee-unit">원</span>
+                </label>
                 <input
                   type="range"
                   id="fee-range"
@@ -194,6 +203,6 @@
         <div id="card-list"></div>
       </div>
     </main>
-    <script src="/js/filter.js"></script>
+    <script src="js/filter.js"></script>
   </body>
 </html>

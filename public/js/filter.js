@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardList = document.getElementById("card-list"); // 카드 목록 영역
   const feeRange = document.getElementById("fee-range"); // 연회비 슬라이더
   const feeValue = document.getElementById("fee-value"); // 연회비 값 표시
+  const feeInput = document.getElementById("fee-input"); // 연회비 직접 입력 박스
+  const feeUnit = document.getElementById("fee-unit"); // 연회비 단위 표시
   const benefitFilters = document.getElementById("benefit-filters"); // 혜택 체크박스 영역
   const loadingSpinner = document.getElementById("loading-spinner"); // 로딩 스피너
   const emptyState = document.getElementById("empty-state"); // 빈 상태 안내
@@ -23,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 카드 데이터 fetch 및 렌더링
   loadingSpinner.style.display = "block"; // 로딩 스피너 표시
-  fetch("/data/cards.json")
+  fetch("../data/cards.json")
     .then((res) => res.json())
     .then((cards) => {
       loadingSpinner.style.display = "none"; // 로딩 스피너 숨김
@@ -130,8 +132,46 @@ document.addEventListener("DOMContentLoaded", () => {
         render(filtered);
       }
 
+      // 단위 변환 함수
+      function getFeeUnit(val, lang) {
+        // 한국어
+        if (lang.startsWith("ko")) {
+          if (val >= 100000000) return "억원";
+          if (val >= 10000000) return "천만원";
+          if (val >= 1000000) return "백만원";
+          if (val >= 10000) return "만원";
+          if (val >= 1000) return "천 원";
+          return "원";
+        } else {
+          // 영어 등 기타 언어: 원화 기호만
+          return "KRW";
+        }
+      }
+      function updateFeeUnit(val) {
+        const lang = navigator.language || "ko";
+        feeUnit.textContent = getFeeUnit(val, lang);
+      }
+      // 슬라이더 → 입력박스 동기화
+      feeRange.addEventListener("input", () => {
+        feeInput.value = feeRange.value;
+        updateFeeUnit(Number(feeRange.value));
+        filterCards();
+      });
+      // 입력박스 → 슬라이더 동기화
+      feeInput.addEventListener("input", () => {
+        let v = Number(feeInput.value);
+        if (isNaN(v)) v = 0;
+        if (v < Number(feeRange.min)) v = Number(feeRange.min);
+        if (v > Number(feeRange.max)) v = Number(feeRange.max);
+        feeInput.value = v;
+        feeRange.value = v;
+        updateFeeUnit(v);
+        filterCards();
+      });
+      // 페이지 로드시 단위 초기화
+      updateFeeUnit(Number(feeInput.value));
+
       // 필터 이벤트 바인딩
-      feeRange.addEventListener("input", filterCards);
       benefitFilters.addEventListener("change", filterCards);
       brandFilter.addEventListener("change", filterCards);
 

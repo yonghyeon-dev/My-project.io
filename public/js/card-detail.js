@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 카드 데이터 fetch
-  fetch("/data/cards.json")
+  fetch("../data/cards.json")
     .then((res) => res.json())
     .then((cards) => {
       const card = cards.find((c) => c.id === cardId);
