@@ -136,10 +136,10 @@
           window.onAuthStateChanged(function (user) {
             if (!user) {
               alert("로그인 후 접근 가능합니다.");
-              window.location.href = "/index.html";
+              window.location.href = "index.html";
             } else if (!window.isAdmin(user)) {
               alert("관리자만 접근 가능합니다.");
-              window.location.href = "/index.html";
+              window.location.href = "index.html";
             }
           });
         }
