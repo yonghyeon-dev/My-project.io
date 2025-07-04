@@ -132,24 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
         render(filtered);
       }
 
-      // 단위 변환 함수
+      // 단위 변환 함수 (항상 '원'만 표시)
       function getFeeUnit(val, lang) {
-        // 한국어
-        if (lang.startsWith("ko")) {
-          if (val >= 100000000) return "억원";
-          if (val >= 10000000) return "천만원";
-          if (val >= 1000000) return "백만원";
-          if (val >= 10000) return "만원";
-          if (val >= 1000) return "천 원";
-          return "원";
-        } else {
-          // 영어 등 기타 언어: 원화 기호만
-          return "KRW";
-        }
+        return "원";
       }
       function updateFeeUnit(val) {
-        const lang = navigator.language || "ko";
-        feeUnit.textContent = getFeeUnit(val, lang);
+        feeUnit.textContent = getFeeUnit(val);
       }
       // 슬라이더 → 입력박스 동기화
       feeRange.addEventListener("input", () => {
@@ -170,6 +158,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       // 페이지 로드시 단위 초기화
       updateFeeUnit(Number(feeInput.value));
+      // 입력 박스 min-width 스타일 적용 (텀브 크기 고정)
+      feeInput.style.minWidth = "60px";
 
       // 필터 이벤트 바인딩
       benefitFilters.addEventListener("change", filterCards);
