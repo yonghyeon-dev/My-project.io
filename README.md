@@ -1,128 +1,230 @@
-# 카드 혜택 비교툴 데이터 자동화 (Google Sheets → JSON)
+# CardCompare Pro
 
-## 목적
+AI 기반 신용카드 추천 및 비교 플랫폼
 
-- 카드 데이터를 구글시트에서 관리하면, 비개발자도 쉽게 수정/추가 가능
-- 시트 데이터를 JSON으로 변환해 `/data/cards.json`에 바로 활용
+## 🚀 프로젝트 개요
 
----
+CardCompare Pro는 사용자에게 가장 적합한 신용카드를 찾아주는 현대적인 웹 애플리케이션입니다. [Card Gorilla](https://www.card-gorilla.com/home)를 참고하여 개발되었으며, 더욱 직관적이고 사용자 친화적인 인터페이스를 제공합니다.
 
-## 1. 구글시트 데이터 예시
+## ✨ 주요 기능
 
-| id    | name             | brand  | fee   | benefits                | image             | description                    | applyUrl                              |
-| ----- | ---------------- | ------ | ----- | ----------------------- | ----------------- | ------------------------------ | ------------------------------------- |
-| card1 | YH 프리미엄 카드 | VISA   | 30000 | 항공 마일리지,영화 할인 | /assets/card1.png | 항공 마일리지 적립과 영화 할인 | https://your-affiliate-link.com/card1 |
-| card2 | YH 실속 카드     | Master | 10000 | 커피 할인,대중교통 할인 | /assets/card2.png | 커피와 대중교통 할인 특화      | https://your-affiliate-link.com/card2 |
+### 🏠 홈페이지
 
-- `benefits`는 쉼표로 구분
+- **AI 기반 카드 추천**: 사용자 패턴 분석을 통한 맞춤형 추천
+- **실시간 검색**: 카드명, 브랜드, 혜택으로 즉시 검색
+- **스마트 필터링**: 연회비, 브랜드, 카테고리, 혜택별 필터링
+- **반응형 디자인**: 모든 디바이스에서 최적화된 경험
 
----
+### 🔍 카드 상세 페이지
 
-## 2. 구글 앱스 스크립트로 JSON 변환
+- **종합 정보**: 카드의 모든 정보를 한눈에 확인
+- **탭 기반 레이아웃**: 개요, 혜택, 리뷰, 비교 탭으로 구성
+- **즐겨찾기 기능**: 관심 카드 저장 및 관리
+- **직접 신청**: 공식 사이트로 바로 연결
 
-1. 구글시트 → 확장 프로그램 → 앱스 스크립트 열기
-2. 아래 코드 붙여넣기 (주석 참고)
+### ⚖️ 카드 비교 페이지
 
-```javascript
-/**
- * 시트 데이터를 JSON으로 변환해주는 웹앱
- * 시트 첫 행: 필드명(id, name, ...)
- * benefits는 쉼표로 분리하여 배열로 변환
- */
-function doGet() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = sheet.getDataRange().getValues();
-  const fields = data[0];
-  const json = data.slice(1).map((row) => {
-    const obj = {};
-    fields.forEach((f, i) => {
-      if (f === "fee") obj[f] = Number(row[i]);
-      else if (f === "benefits")
-        obj[f] = String(row[i])
-          .split(",")
-          .map((s) => s.trim());
-      else obj[f] = row[i];
-    });
-    return obj;
-  });
-  return ContentService.createTextOutput(JSON.stringify(json)).setMimeType(
-    ContentService.MimeType.JSON
-  );
-}
-```
+- **최대 3개 카드 비교**: 선택한 카드들을 상세 비교
+- **직관적 테이블**: 연회비, 혜택, 평점 등을 한눈에 비교
+- **동적 카드 선택**: 비교할 카드를 자유롭게 선택/제거
 
-3. 배포 → 새 배포 → 웹앱으로 배포(익명 액세스 허용)
-4. 배포 URL로 접속하면 JSON 데이터 확인 가능
+### ❤️ 즐겨찾기 페이지
 
----
+- **개인 카드 관리**: 관심 카드들을 체계적으로 관리
+- **로컬 스토리지**: 브라우저에 안전하게 저장
+- **빠른 액세스**: 저장된 카드로 즉시 접근
 
-## 3. 활용 방법
+## 🛠️ 기술 스택
 
-- 위 웹앱 URL에서 JSON을 다운받아 `/data/cards.json`에 저장
-- (자동화) `curl` 등으로 주기적으로 받아올 수도 있음
+### Frontend
+
+- **React 18**: 최신 React 기능 활용
+- **Vite**: 빠른 개발 환경 및 빌드 도구
+- **Tailwind CSS**: 유틸리티 기반 CSS 프레임워크
+- **Framer Motion**: 부드러운 애니메이션 효과
+- **Lucide React**: 현대적인 아이콘 라이브러리
+
+### 상태 관리 & 라우팅
+
+- **React Router DOM**: SPA 라우팅
+- **React Query**: 서버 상태 관리
+- **Zustand**: 클라이언트 상태 관리
+
+### 개발 도구
+
+- **ESLint**: 코드 품질 관리
+- **PostCSS**: CSS 후처리
+- **Autoprefixer**: 브라우저 호환성
+
+## 📦 설치 및 실행
+
+### 필수 요구사항
+
+- Node.js 16.0 이상
+- npm 또는 yarn
+
+### 설치
 
 ```bash
-curl -o data/cards.json "https://script.google.com/macros/s/웹앱-URL/exec"
+# 의존성 설치
+npm install
+
+# 개발 서버 실행
+npm run dev
+
+# 프로덕션 빌드
+npm run build
+
+# 빌드 미리보기
+npm run preview
 ```
+
+### 환경 설정
+
+```bash
+# 개발 환경
+npm run dev
+
+# 프로덕션 환경
+npm run build && npm run preview
+```
+
+## 🎨 디자인 시스템
+
+### 색상 팔레트
+
+- **Primary**: 파란색 계열 (#3B82F6 ~ #1E3A8A)
+- **Secondary**: 회색 계열 (#64748B ~ #0F172A)
+- **Success**: 초록색 (#10B981)
+- **Warning**: 노란색 (#F59E0B)
+- **Error**: 빨간색 (#EF4444)
+
+### 타이포그래피
+
+- **Primary Font**: Inter (영문)
+- **Secondary Font**: Noto Sans KR (한글)
+- **Font Weights**: 300, 400, 500, 600, 700, 800
+
+### 컴포넌트
+
+- **버튼**: Primary, Secondary, Ghost 스타일
+- **카드**: 그림자 효과와 호버 애니메이션
+- **모달**: 부드러운 진입/퇴장 애니메이션
+- **폼**: 접근성을 고려한 입력 요소
+
+## 📱 반응형 디자인
+
+### 브레이크포인트
+
+- **Mobile**: 320px ~ 768px
+- **Tablet**: 768px ~ 1024px
+- **Desktop**: 1024px 이상
+
+### 최적화
+
+- **모바일 우선**: 모바일 환경을 우선 고려한 디자인
+- **터치 친화적**: 터치 인터페이스에 최적화된 버튼 크기
+- **성능 최적화**: 이미지 지연 로딩 및 코드 스플리팅
+
+## 🔧 개발 가이드
+
+### 프로젝트 구조
+
+```
+src/
+├── components/     # 재사용 가능한 컴포넌트
+├── pages/         # 페이지 컴포넌트
+├── hooks/         # 커스텀 훅
+├── utils/         # 유틸리티 함수
+├── data/          # 정적 데이터
+└── assets/        # 이미지, 폰트 등
+```
+
+### 컴포넌트 작성 가이드
+
+- **함수형 컴포넌트**: Hooks 기반으로 작성
+- **Props 타입**: PropTypes 또는 TypeScript 사용 권장
+- **스타일링**: Tailwind CSS 클래스 우선 사용
+- **애니메이션**: Framer Motion 활용
+
+### 코드 컨벤션
+
+- **네이밍**: camelCase (변수, 함수), PascalCase (컴포넌트)
+- **파일명**: 컴포넌트는 PascalCase, 유틸리티는 camelCase
+- **주석**: 복잡한 로직에 한글 주석 추가
+
+## 🚀 배포
+
+### Vercel 배포 (권장)
+
+```bash
+# Vercel CLI 설치
+npm i -g vercel
+
+# 배포
+vercel
+```
+
+### Netlify 배포
+
+```bash
+# 빌드
+npm run build
+
+# dist 폴더를 Netlify에 업로드
+```
+
+### GitHub Pages 배포
+
+```bash
+# gh-pages 설치
+npm install --save-dev gh-pages
+
+# 배포 스크립트 추가 후
+npm run deploy
+```
+
+## 🔮 향후 계획
+
+### 단기 계획 (1-2개월)
+
+- [ ] 사용자 리뷰 시스템 구현
+- [ ] AI 추천 알고리즘 고도화
+- [ ] 카드 신청 추적 기능
+- [ ] PWA 지원
+
+### 중기 계획 (3-6개월)
+
+- [ ] 백엔드 API 연동
+- [ ] 사용자 계정 시스템
+- [ ] 카드 혜택 계산기
+- [ ] 모바일 앱 개발
+
+### 장기 계획 (6개월 이상)
+
+- [ ] 머신러닝 기반 추천 엔진
+- [ ] 실시간 카드 혜택 업데이트
+- [ ] 소셜 기능 (카드 리뷰 공유)
+- [ ] 국제화 지원
+
+## 🤝 기여하기
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 라이선스
+
+이 프로젝트는 MIT 라이선스 하에 배포됩니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.
+
+## 📞 문의
+
+- **이메일**: contact@cardcomparepro.com
+- **GitHub**: [이슈 등록](https://github.com/your-username/card-compare-pro/issues)
+- **웹사이트**: [CardCompare Pro](https://cardcomparepro.com)
 
 ---
 
-## 4. 참고/팁
-
-- 시트에서 데이터만 수정하면, 사이트에 바로 반영 가능
-- benefits, fee 등 타입 변환에 주의 (주석 참고)
-- 더 고급 자동화(깃허브 액션, Netlify 등)도 연동 가능
-
----
-
-# Firebase 인증 기반 회원가입/로그인/관리자 기능 적용법
-
-## 1. Firebase 프로젝트 생성
-
-- [Firebase 콘솔](https://console.firebase.google.com/)에서 새 프로젝트 생성
-
-## 2. Authentication(이메일/비밀번호) 활성화
-
-- 좌측 메뉴 'Authentication' → 'Sign-in method' → 'Email/Password' 활성화
-
-## 3. firebaseConfig 복사 및 적용
-
-- '프로젝트 설정' → '일반' → '내 앱에 Firebase 추가' → '웹 앱' 선택
-- 아래와 같은 설정 코드 복사
-
-```js
-const firebaseConfig = {
-  apiKey: "...",
-  authDomain: "...",
-  projectId: "...",
-  appId: "...",
-};
-```
-
-- `/js/firebase-auth.js`의 상단에 복사한 값으로 덮어쓰기
-
-## 4. 관리자 이메일 지정
-
-- `/js/firebase-auth.js`에서 `ADMIN_EMAIL` 값을 원하는 관리자 이메일로 변경
-
-```js
-const ADMIN_EMAIL = "admin@yourdomain.com";
-```
-
-- 이 이메일로 가입한 계정만 관리자 권한을 가짐
-
-## 5. 배포 및 테스트
-
-- index.html에서 로그인/회원가입/로그아웃/관리자 메뉴가 정상 동작하는지 확인
-- admin.html에 로그인하지 않거나 관리자가 아니면 접근 불가(리다이렉트)
-- 관리자 계정으로 로그인 시 admin.html에서 통계/관리자 기능 확인
-
-## 6. 추가 팁
-
-- Firebase 무료 플랜(Blaze)으로 소규모 서비스 충분
-- 구글/카카오 등 소셜 로그인도 Firebase 콘솔에서 추가 가능
-- 관리자 권한을 여러 명에게 부여하려면 ADMIN_EMAIL을 배열로 관리하거나, DB에 isAdmin flag를 추가해 확장 가능
-
----
-
-**질문/확장 요청이 있으면 언제든 말씀해 주세요!**
+**CardCompare Pro** - 더 나은 금융 결정을 위한 스마트한 선택

@@ -2,8 +2,19 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>카드 혜택 비교</title>
+    <title>CardCompare Pro - 최고의 신용카드 비교 플랫폼</title>
+    <meta
+      name="description"
+      content="AI 기반 신용카드 추천 및 비교 서비스. 연회비, 혜택, 브랜드별 맞춤 카드를 찾아보세요."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <!-- 사이트 설명 (SEO용) -->
     <meta
       name="description"
@@ -45,6 +56,8 @@
     <script src="js/firebase-auth.js"></script>
   </head>
   <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
     <header>
       <h1 id="main-title">카드 혜택 비교</h1>
       <!-- 로그인/회원가입/로그아웃/관리자 메뉴 -->
